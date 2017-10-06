@@ -4,12 +4,19 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/lipis/bootstrap-social.git"
+    },
     "require": {
         "php": ">=7.0.0",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "laravel/socialite": "~3.0"
+        "laravel/socialite": "~3.0",
+        "bootstrap": "~3",
+        "font-awesome": "~4.7"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

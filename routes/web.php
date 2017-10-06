@@ -11,15 +11,20 @@
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'ConceitoController@index']);
+//Route::get('/', ['as' => 'home', 'uses' => 'ConceitoController@index']);
 
-Route::group(['prefix' => 'conceito'], function () {
+Auth::routes();
+
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'conceito', 'middleware' => 'admin'], function () {
     Route::get('/', ['as' => 'conceito.index', 'uses' => 'ConceitoController@index']);
 
     Route::post('/store', ['as' => 'conceito.store', 'uses' => 'ConceitoController@store']);
 });
 
-Route::group(['prefix' => 'mapa'], function () {
+Route::group(['prefix' => 'mapa', 'middleware' => 'admin'], function () {
     Route::get('/', ['as' => 'mapa.index', 'uses' => 'MapaController@index']);
 
     Route::post('/store', ['as' => 'mapa.store', 'uses' => 'MapaController@store']);
@@ -28,13 +33,9 @@ Route::group(['prefix' => 'mapa'], function () {
     Route::group(['prefix' => 'conceitos'], function () {
         Route::post('/store', ['as' => 'mapa_conceito.store', 'uses' => 'MapaConceitoController@store']);
     });
-
 });
+
 Route::group(['prefix' => 'auth'], function () {
     Route::get('{provider}', 'Auth\AuthController@redirectToProvider');
     Route::get('{provider}/callback', 'Auth\AuthController@handleProviderCallback');
 });
-
-
-Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');

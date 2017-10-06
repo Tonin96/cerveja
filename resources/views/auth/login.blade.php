@@ -60,6 +60,9 @@
                                 </a>
                             </div>
                         </div>
+                        <a href="{{ url('/auth/google') }}" class="btn btn-block btn-social btn-google">
+                            <img src="{{asset('img/google.png')}}"> Acessar com Google+
+                        </a>
                     </form>
                 </div>
             </div>

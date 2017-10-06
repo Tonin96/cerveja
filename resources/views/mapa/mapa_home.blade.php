@@ -1,8 +1,6 @@
-@extends('layouts.base')
+@extends('layouts.app')
 
 @section('content')
-
-    @extends('layouts.partial.header')
 
     <div class="container">
         <h1>Mapa</h1>

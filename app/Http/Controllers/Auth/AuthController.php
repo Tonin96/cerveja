@@ -35,6 +35,7 @@ class AuthController extends Controller {
 
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
+        session(['admin' => $authUser->administrador]);
         return redirect($this->redirectTo);
     }
 

@@ -1,27 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <form>
-    <!--Other form fields above the button-->
-    <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-btn fa-user"></i> Register
-            </button>
-        </div>
-    </div>
-    <hr>
-    <div class="form-group">
-        <div class="col-md-6 col-md-offset-4">
-            <a href="{{ url('/auth/google') }}" class="btn btn-github"><i class="fa fa-github"></i> Google</a>
-            <a href="{{ url('/auth/twitter') }}" class="btn btn-twitter"><i class="fa fa-twitter"></i> Twitter</a>
-            <a href="{{ url('/auth/facebook') }}" class="btn btn-facebook"><i class="fa fa-facebook"></i> Facebook</a>
-        </div>
-    </div>
-    </form>
-
-
     <div class="container">
         <h1>Conceitos</h1>
         <div class="row col-md-12">
@@ -35,8 +14,12 @@
                 </div>
 
                 <button id="button_novo" type="submit" class="btn btn-success">Novo</button>
-                <button id="button_resetar" type="reset" class="btn btn-warning" onclick="resetar();" style="display: none">Resetar</button>
-                <button id="button_apagar" type="submit" class="btn btn-danger" onclick="apagar();" style="display: none">Apagar</button>
+                <button id="button_resetar" type="reset" class="btn btn-warning" onclick="resetar();"
+                        style="display: none">Resetar
+                </button>
+                <button id="button_apagar" type="submit" class="btn btn-danger" onclick="apagar();"
+                        style="display: none">Apagar
+                </button>
             </form>
         </div>
 
@@ -56,7 +39,9 @@
                         <td>{{$conceito['id']}}</td>
                         <td>{{$conceito['nome']}}</td>
                         <td>
-                            <button onclick="editar('{{$conceito['id']}}','{{$conceito['nome']}}'  )" class="btn btn-primary">Editar</button>
+                            <button onclick="editar('{{$conceito['id']}}','{{$conceito['nome']}}'  )"
+                                    class="btn btn-primary">Editar
+                            </button>
                         </td>
                     </tr>
                 @endforeach
@@ -79,7 +64,7 @@
             $('#button_apagar').css("display", "inline");
         }
 
-        function resetar(){
+        function resetar() {
             $('#button_novo').text("Novo");
             $('#button_resetar').css("display", "none");
             $('#button_apagar').css("display", "none");
