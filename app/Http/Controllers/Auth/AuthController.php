@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\PessoaService;
+use App\Models\Pessoa;
 use App\User;
-use Illuminate\Support\Facades\Auth;;
+use Illuminate\Support\Facades\Auth;
+
+;
+
 use Laravel\Socialite\Facades\Socialite;
 
 
@@ -13,6 +18,12 @@ class AuthController extends Controller {
     // Some methods which were generated with the app
 
     private $redirectTo = '/';
+    private $pessoa_service;
+
+    public function __construct(PessoaService $pessoa_service) {
+        $this->pessoa_service = $pessoa_service;
+    }
+
     /**
      * Redirect the user to the OAuth Provider.
      *
@@ -36,6 +47,8 @@ class AuthController extends Controller {
         $authUser = $this->findOrCreateUser($user, $provider);
         Auth::login($authUser, true);
         session(['admin' => $authUser->administrador]);
+        session(['image_profile' => $user['image']['url']]);
+        session(['primeiro_nome' => $user['name']['givenName']]);
         return redirect($this->redirectTo);
     }
 
@@ -47,17 +60,23 @@ class AuthController extends Controller {
      * @return  User
      */
     public function findOrCreateUser($user, $provider) {
-
-
         $authUser = User::where('provider_id', $user->id)->first();
         if ($authUser) {
             return $authUser;
         }
-        return User::create([
-            'name' => $user->name,
+
+        $usuario = User::create([
             'email' => $user->email,
             'provider' => $provider,
             'provider_id' => $user->id
         ]);
+
+        Pessoa::create([
+           'nome' => $user->name,
+            'email' => $user->email,
+            'usuario_id' => $usuario->id
+        ]);
+
+        return $usuario;
     }
 }

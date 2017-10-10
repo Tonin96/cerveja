@@ -13,6 +13,8 @@ class CreatePessoasTable extends Migration {
     public function up() {
         Schema::create('pessoas', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('usuario_id')
+                ->nullable();
             $table->string('nome', 80)
                 ->nullable();
             $table->string('email', 50)
