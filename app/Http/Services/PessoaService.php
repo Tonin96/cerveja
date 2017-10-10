@@ -25,20 +25,20 @@ class PessoaService {
         return $this->model_pessoa->get();
     }
 
-    public function getByUsuarioId($usuario_id){
+    public function getByUsuarioId($usuario_id) {
         return $this->model_pessoa
             ->where('usuario_id', $usuario_id)
             ->get()
             ->first();
     }
 
-    public function update($dados){
+    public function update($dados) {
         $pessoa = $this->model_pessoa->find($dados['id']);
 
 
-        $chars = array(".","/","-","(",")");
-        $dados['cpf'] = str_replace($chars,"",$dados['cpf']);
-        $dados['telefone'] = str_replace($chars,"",$dados['telefone']);
+        $chars = array(".", "/", "-", "(", ")", ' ');
+        $dados['cpf'] = str_replace($chars, "", $dados['cpf']);
+        $dados['telefone'] = str_replace($chars, "", $dados['telefone']);
         $pessoa->email = $dados['email'];
         $pessoa->cpf = $dados['cpf'];
         $pessoa->telefone = $dados['telefone'];

@@ -35,8 +35,7 @@ class PessoaConceitoController extends Controller {
         return redirect()->back();
     }
 
-    public function drop(Request $request) {
-        $id = $request->only('id');
+    public function drop($id) {
 
         $this->pessoa_conceito_sevice->delete($id);
 

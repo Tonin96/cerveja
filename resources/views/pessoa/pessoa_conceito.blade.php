@@ -5,10 +5,12 @@
     <div class="container">
         <h2>{{$pessoa->nome}}</h2>
         <div class="row col-md-12">
-            <form method="post">
+            <form method="post" action="{{route('pessoa_conceto.store')}}">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="pessoa_id" value="{{$pessoa->id}}">
                 <div class="form-group col-md-6">
-                    <label for="conceitos" class="control-label">Conceitos</label>
-                    <select id="conceitos" name="conceitos" class="form-control">
+                    <label for="conceito_id" class="control-label">Conceitos</label>
+                    <select id="conceito_id" name="conceito_id" class="form-control">
                         <option value="">Selecione</option>
                         @foreach($conceitos as $key => $conceito)
                             <option value="{{$conceito->id}}">{{$conceito->nome}}</option>
@@ -36,10 +38,10 @@
                 <tbody>
                 @foreach($conceitos_pessoa as $key => $conceito)
                     <tr>
-                        <td>{{$conceito['conceito_id']}}</td>
+                        <td>{{$conceito['id']}}</td>
                         <td>{{$conceito['conceito_nome']}}</td>
                         <td>
-                            <a href="" class="btn btn-danger">Excluir</a>
+                            <a href="{{route('pessoa_conceto.drop', $conceito['id'])}}" class="btn btn-danger">Excluir</a>
                         </td>
                     </tr>
                 @endforeach

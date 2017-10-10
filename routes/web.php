@@ -15,7 +15,7 @@
 
 Auth::routes();
 
-Route::group(['prefix' => '/', 'middleware' => ['admin', 'dadosCompletos']], function () {
+Route::group(['prefix' => '/', 'middleware' => ['dadosCompletos']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     Route::get('/home', 'HomeController@index')->name('home');
 });
@@ -28,7 +28,7 @@ Route::group(['prefix' => 'conceito', 'middleware' => ['admin']], function () {
     Route::post('/store', ['as' => 'conceito.store', 'uses' => 'ConceitoController@store']);
 });
 
-Route::group(['prefix' => 'pessoa', 'middleware' => ['admin']], function () {
+Route::group(['prefix' => 'pessoa'], function () {
     Route::get('/', ['as' => 'pessoa.index', 'uses' => 'PessoaController@index']);
 
     Route::get('/meusDados', ['as' => 'pessoa.meusDados', 'uses' => 'PessoaController@meusDados']);
@@ -36,6 +36,8 @@ Route::group(['prefix' => 'pessoa', 'middleware' => ['admin']], function () {
 
     Route::group(['prefix' => 'conceitos'], function () {
         Route::get('/{pessoa_id}', ['as' => 'pessoa_conceito.index', 'uses' => 'PessoaConceitoController@index']);
+        Route::post('/store', ['as' => 'pessoa_conceto.store', 'uses' => 'PessoaConceitoController@store']);
+        Route::get('/drop/{id}', ['as' => 'pessoa_conceto.drop', 'uses' => 'PessoaConceitoController@drop']);
     });
 });
 
