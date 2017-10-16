@@ -21,7 +21,6 @@ Route::group(['prefix' => '/', 'middleware' => ['dadosCompletos']], function () 
 });
 
 
-
 Route::group(['prefix' => 'conceito', 'middleware' => ['admin']], function () {
     Route::get('/', ['as' => 'conceito.index', 'uses' => 'ConceitoController@index']);
 
@@ -50,6 +49,10 @@ Route::group(['prefix' => 'mapa', 'middleware' => ['admin', 'dadosCompletos']], 
     Route::group(['prefix' => 'conceitos'], function () {
         Route::post('/store', ['as' => 'mapa_conceito.store', 'uses' => 'MapaConceitoController@store']);
     });
+});
+
+Route::group(['prefix' => 'google'], function () {
+    Route::post('getEstalecimentosByPosition/', ['as' => 'google.estabelecimentos', 'uses' => 'GoogleController@getEstalecimentosByPosition']);
 });
 
 Route::group(['prefix' => 'auth'], function () {
