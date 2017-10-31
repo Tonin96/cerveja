@@ -27,6 +27,17 @@ Route::group(['prefix' => 'conceito', 'middleware' => ['admin']], function () {
     Route::post('/store', ['as' => 'conceito.store', 'uses' => 'ConceitoController@store']);
 });
 
+Route::group(['prefix' => 'cerveja', 'middleware' => ['admin']], function () {
+    Route::get('/', ['as' => 'cerveja.index', 'uses' => 'CervejaController@index']);
+
+    Route::post('/store', ['as' => 'cerveja.store', 'uses' => 'CervejaController@store']);
+    Route::group(['prefix' => 'conceitos'], function () {
+        Route::get('/{cerveja_id}', ['as' => 'cerveja_conceito.index', 'uses' => 'CervejaController@indexConceitos']);
+        Route::post('/store', ['as' => 'cerveja_conceito.store', 'uses' => 'CervejaController@storeConceito']);
+    });
+
+});
+
 Route::group(['prefix' => 'pessoa'], function () {
     Route::get('/', ['as' => 'pessoa.index', 'uses' => 'PessoaController@index']);
 
