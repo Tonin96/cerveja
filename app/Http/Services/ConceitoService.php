@@ -12,8 +12,8 @@ class ConceitoService {
         $this->model_conceito = $model_conceito;
     }
 
-    public function get($id) {
-        return $this->model_conceito->find($id);
+    public function get($id): Conceito {
+        return $this->model_conceito->find($id)->first();
     }
 
     public function getAll() {
@@ -29,16 +29,12 @@ class ConceitoService {
             $this->model_conceito->insert($dados);
         }
 
-
         return true;
     }
 
     public function delete($id) {
         $conceito = $this->model_conceito->find($id);
 
-
         return $conceito->delete();
     }
-
-
 }

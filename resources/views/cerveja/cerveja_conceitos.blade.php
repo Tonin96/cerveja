@@ -8,6 +8,7 @@
             <form method="post" action="{{route('cerveja_conceito.store')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" value="{{$cerveja['id']}}" name="cerveja_id">
+                <input type="hidden" value="{{\App\Models\AbstracModel::CONCEITO_CONCEITO}}" name="tipo_conceito">
                 <div class="form-group col-md-6">
                     <label for="conceito_id">Conceito: </label>
                     <select id="conceito_id" class="form-control" name="conceito_id">

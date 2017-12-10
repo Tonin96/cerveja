@@ -18,7 +18,7 @@
                     <td>{{$pessoa['id']}}</td>
                     <td>{{$pessoa['nome']}}</td>
                     <td>
-                        <a href="{{route('pessoa_conceito.index', $pessoa['id'])}}" class="btn btn-primary">Conceitos</a>
+                        <a href="{{route('pessoa.indexConceitos', $pessoa['id'])}}" class="btn btn-primary">Conceitos</a>
                     </td>
                 </tr>
             @endforeach

@@ -5,9 +5,9 @@
     <div class="container">
         <h1>Conceitos do Mapa</h1>
         <div class="row col-md-12">
-            <form method="post" action="{{route('mapa_conceito.store')}}">
+            <form method="post" action="{{route('mapa.storeConceito')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" value="{{$mapa_id}}" name="mapa_id">
+                <input type="hidden" value="{{$mapa->id}}" name="mapa_id">
                 <div class="form-group col-md-6">
                     <label for="conceito_origem">Conceito Origem: </label>
                     <select id="conceito_origem" class="form-control" name="conceito_origem_id">
@@ -22,7 +22,7 @@
                     <label for="conceito_destino">Conceito Destino</label>
                     <select id="conceito_destino" class="form-control" name="conceito_destino_id">
                         <option value="">Selecione</option>
-                        @foreach($conceitos_livres as $key => $conceito)
+                        @foreach($conceitos as $key => $conceito)
                             <option value="{{$conceito->id}}">{{$conceito->nome}}</option>
                         @endforeach
                     </select>
@@ -46,7 +46,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($conceitos_mapa as $key => $conceito)
+                @foreach($mapa_conceitos as $key => $conceito)
                     <tr>
                         <td>{{$conceito['origem_nome']}}</td>
                         <td>{{$conceito['destino_nome']}}</td>

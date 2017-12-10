@@ -5,7 +5,7 @@
     <div class="container">
         <h2>{{$pessoa->nome}}</h2>
         <div class="row col-md-12">
-            <form method="post" action="{{route('pessoa_conceto.store')}}">
+            <form method="post" action="{{route('pessoa.storeConceito')}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="pessoa_id" value="{{$pessoa->id}}">
                 <div class="form-group col-md-6">
@@ -32,17 +32,13 @@
                 <tr>
                     <th>ID</th>
                     <th>Conceito</th>
-                    <th>Opções</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($conceitos_pessoa as $key => $conceito)
                     <tr>
-                        <td>{{$conceito['id']}}</td>
-                        <td>{{$conceito['conceito_nome']}}</td>
-                        <td>
-                            <a href="{{route('pessoa_conceto.drop', $conceito['id'])}}" class="btn btn-danger">Excluir</a>
-                        </td>
+                        <td>{{$conceito->id}}</td>
+                        <td>{{$conceito->nome}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -54,6 +50,7 @@
     <script>
         $(document).ready(function () {
             $('#conceitos').select2();
+            $('#conceitos_pessoa').DataTable();
 
         });
 

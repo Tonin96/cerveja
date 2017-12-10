@@ -45,9 +45,8 @@ Route::group(['prefix' => 'pessoa'], function () {
     Route::post('/salvarDados', ['as' => 'pessoa.salvar_dados', 'uses' => 'PessoaController@salvarDados']);
 
     Route::group(['prefix' => 'conceitos'], function () {
-        Route::get('/{pessoa_id}', ['as' => 'pessoa_conceito.index', 'uses' => 'PessoaConceitoController@index']);
-        Route::post('/store', ['as' => 'pessoa_conceto.store', 'uses' => 'PessoaConceitoController@store']);
-        Route::get('/drop/{id}', ['as' => 'pessoa_conceto.drop', 'uses' => 'PessoaConceitoController@drop']);
+        Route::get('/{pessoa_id}', ['as' => 'pessoa.indexConceitos', 'uses' => 'PessoaController@indexConceitos']);
+        Route::post('/store', ['as' => 'pessoa.storeConceito', 'uses' => 'PessoaController@storeConceito']);
     });
 });
 
@@ -55,10 +54,10 @@ Route::group(['prefix' => 'mapa', 'middleware' => ['admin', 'dadosCompletos']], 
     Route::get('/', ['as' => 'mapa.index', 'uses' => 'MapaController@index']);
 
     Route::post('/store', ['as' => 'mapa.store', 'uses' => 'MapaController@store']);
-    Route::get('/{id}', ['as' => 'mapa.conceitos', 'uses' => 'MapaController@getConceitosByMapa']);
+    Route::get('/{id}', ['as' => 'mapa.indexConceito', 'uses' => 'MapaController@indexConceitos']);
 
     Route::group(['prefix' => 'conceitos'], function () {
-        Route::post('/store', ['as' => 'mapa_conceito.store', 'uses' => 'MapaConceitoController@store']);
+        Route::post('/store', ['as' => 'mapa.storeConceito', 'uses' => 'MapaController@storeConceito']);
     });
 });
 

@@ -4,6 +4,8 @@ namespace App\Http\Services;
 
 use App\Models\Cerveja;
 use App\Models\Conceito;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class CervejaService {
@@ -15,8 +17,8 @@ class CervejaService {
         $this->model_conceito = $model_conceito;
     }
 
-    public function get($id) {
-        return $this->model_cerveja->find($id);
+    public function get($id): Cerveja {
+        return $this->model_cerveja->find($id)->first();
     }
 
     public function getAll() {
@@ -39,19 +41,4 @@ class CervejaService {
 
         return true;
     }
-
-    public function addConceito($cerveja_id, $conceito_id) {
-        $cerveja = $this->get($cerveja_id)[0];
-        $conceitos_cerveja = $cerveja->getConceitos();
-        $conceitos_ids = collect();
-
-        foreach ($conceitos_cerveja as $key) {
-            $conceitos_ids->push($key->id);
-        }
-        $conceitos_ids->push(intval($conceito_id));
-        $conceitos = json_encode(array('conceitos' => $conceitos_ids));
-
-        return $cerveja->update(['conceitos->conceitos' => $conceitos]);
-    }
-
 }

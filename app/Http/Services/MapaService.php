@@ -16,7 +16,7 @@ class MapaService {
         $this->model_mapa_conceito = $model_mapa_conceito;
     }
 
-    public function get($id) {
+    public function get($id): Mapa {
         return $this->model_mapa->find($id);
     }
 

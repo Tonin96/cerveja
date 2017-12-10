@@ -66,7 +66,7 @@
                             @if(Session::get('admin') == 1)
                                 <li><a href="{{route('conceito.index')}}">Conceitos</a></li>
                                 <li><a href="{{route('mapa.index')}}">Mapas</a></li>
-                                <li><a href="{{route('home')}}">Cerveja</a></li>
+                                <li><a href="{{route('cerveja.index')}}">Cerveja</a></li>
                                 <li><a href="{{route('pessoa.index')}}">Pessoas</a></li>
                             @endif
                             <li class="dropdown">

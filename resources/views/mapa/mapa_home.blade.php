@@ -35,7 +35,7 @@
                         <td>{{$mapa['nome']}}</td>
                         <td>
                             <button onclick="editar('{{$mapa['id']}}','{{$mapa['nome']}}'  )" class="btn btn-primary">Editar</button>
-                            <a href="{{route('mapa.conceitos', $mapa['id'])}}" class="btn btn-success">Conceitos</a>
+                            <a href="{{route('mapa.indexConceito', $mapa['id'])}}" class="btn btn-success">Conceitos</a>
                         </td>
                     </tr>
                 @endforeach

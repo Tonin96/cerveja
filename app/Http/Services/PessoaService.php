@@ -17,8 +17,8 @@ class PessoaService {
         $this->model_usuario = $model_usuario;
     }
 
-    public function get($id) {
-        return $this->model_pessoa->find($id);
+    public function get($id):Pessoa {
+        return $this->model_pessoa->find($id)->first();
     }
 
     public function getAll() {
