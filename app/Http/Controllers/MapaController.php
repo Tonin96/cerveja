@@ -2,25 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Services\ConceitoService;
 use App\Http\Services\HelperService;
-use App\Http\Services\MapaConceitoService;
 use App\Http\Services\MapaService;
-use App\Models\Conceito;
-use App\Models\Mapa;
 use Illuminate\Http\Request;
 
 class MapaController extends Controller {
     private $conceito_service;
     private $mapa_service;
-    private $mapa_conceito_service;
     private $helper_service;
+    private $arrayArvore = array();
+    private $count = 0;
 
-    public function __construct(ConceitoService $conceito_service, MapaService $mapa_service, MapaConceitoService $mapa_conceito_service, HelperService $helper_service) {
+    public function __construct(ConceitoService $conceito_service, MapaService $mapa_service, HelperService $helper_service) {
         $this->conceito_service = $conceito_service;
         $this->mapa_service = $mapa_service;
-        $this->mapa_conceito_service = $mapa_conceito_service;
         $this->helper_service = $helper_service;
     }
 
@@ -40,30 +36,38 @@ class MapaController extends Controller {
         return redirect()->back();
     }
 
-    public function getConceitosByMapa($mapa_id) {
-        $conceitos_mapa = $this->mapa_service->getConceitosByMapa($mapa_id);
+    public function indexConceitos($mapa_id) {
+        $mapa = $this->mapa_service->get($mapa_id);
         $conceitos = $this->conceito_service->getAll();
-        $conceito_livre = $this->mapa_conceito_service->getConceitosSemPai();
-
-        return view('mapa.mapa_conceitos', ['conceitos_mapa' => $conceitos_mapa, 'conceitos' => $conceitos, 'conceitos_livres' => $conceito_livre,'mapa_id' => $mapa_id]);
+        $arvore = $mapa->getArvore();
+        $this->buscarArvoreRecursivamente($arvore);
+        return view('mapa.mapa_conceitos', ['mapa_conceitos' => $this->arrayArvore, 'conceitos' => $conceitos, 'mapa' => $mapa]);
     }
 
-    public function indexConceitos($mapa_id) {
+    private function buscarArvoreRecursivamente($arvore) {
+        if (!is_array($arvore)) {
+            return;
 
+        }
 
-        $mapa = $this->mapa_service->get($mapa_id);
-        $mapa->getArvore();
-        $mapa_conceitos = $mapa->getConceitos(Mapa::CONCEITO_CONCEITO);
-        $conceitos = $this->conceito_service->getAll();
+        array_map(function ($key) {
 
-        return view('mapa.mapa_conceitos', ['mapa_conceitos' => $mapa_conceitos, 'conceitos' => $conceitos,  'mapa_id', 'mapa' => $mapa]);
+            if (count($key->destino) > 0) {
+                foreach ($key->destino as $destino) {
+                    array_push($this->arrayArvore, array('origem' => $key->origem->nome, 'destino' => $destino->origem->nome));
+                }
+
+                $this->count++;
+
+                $this->buscarArvoreRecursivamente($key->destino);
+            }
+        }, ($arvore));
+
     }
 
     public function storeConceito(Request $request) {
-        $cerveja = $this->mapa_service->get($request->only('mapa_id'));
-        $tipo_conceito = $request->only('tipo_conceito');
-        //$conceito = $this->helper_service->getConceitoByTipoAndId($tipo_conceito, $request->only('conceito_id')['conceito_id']);
-        $cerveja->addConceito($cerveja);
+        $mapa = $this->mapa_service->get($request->only('mapa_id'));
+        $mapa->addConceito($this->conceito_service->get($request->only('conceito_origem_id')), $this->conceito_service->get($request->only('conceito_destino_id')));
 
         return redirect()->back();
     }

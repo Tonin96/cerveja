@@ -43,6 +43,8 @@ Route::group(['prefix' => 'pessoa'], function () {
 
     Route::get('/meusDados', ['as' => 'pessoa.meusDados', 'uses' => 'PessoaController@meusDados']);
     Route::post('/salvarDados', ['as' => 'pessoa.salvar_dados', 'uses' => 'PessoaController@salvarDados']);
+    Route::post('/beber', ['as' => 'pessoa.beber', 'uses' => 'PessoaController@beber']);
+    Route::post('/recomendar', ['as' => 'pessoa.recomendar', 'uses' => 'PessoaController@recomendar']);
 
     Route::group(['prefix' => 'conceitos'], function () {
         Route::get('/{pessoa_id}', ['as' => 'pessoa.indexConceitos', 'uses' => 'PessoaController@indexConceitos']);

@@ -49,6 +49,7 @@ class AuthController extends Controller {
         session(['admin' => $authUser->administrador]);
         session(['image_profile' => $user['image']['url']]);
         session(['primeiro_nome' => $user['name']['givenName']]);
+        session(['pessoa_id' => $this->pessoa_service->getByUsuarioId($authUser->id)->id]);
         return redirect($this->redirectTo);
     }
 

@@ -15,29 +15,53 @@
             <div class="col-md-7">
                 <div id="map"></div>
             </div>
-            <div id="id_local" class="col-md-4 panel panel-default hidden">
-                <div class="panel-heading">
+            <div class="col-md-4">
+                <div id="id_local" class="col-md-12 panel panel-default ">
+                    <div class="panel-heading">
 
-                    <h3 id="id_nome_local" class="panel-title">Panel title</h3>
+                        <h3 id="id_nome_local" class="panel-title">Panel title</h3>
 
 
-                    <h4 id="id_nota"></h4>
+                        <h4 id="id_nota"></h4>
 
-                </div>
-                <div class="panel-body">
-                    <label><strong>Numero: </strong><label id="id_numero"></label></label>
+                    </div>
+                    <div class="panel-body">
+                        <label><strong>Numero: </strong><label id="id_numero"></label></label>
 
-                    <table id="id_comentarios" class="table table-condensed table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Avaliação</th>
-                            <th>Comentario</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                        <table id="id_comentarios" class="table table-condensed table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Avaliação</th>
+                                <th>Comentario</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <form method="post" action="{{route('pessoa.beber')}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" id="id_estabelecimento" name="estabelecimento_id" value="">
+
+                            <div class="col-md-6">
+                                <select class="form-control" name="cerveja_id">
+                                    @foreach($cervejas as $key => $cerveja)
+                                        <option value="{{$cerveja->id}}">{{$cerveja->nome}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-6">
+                                <button class="btn btn-primary">Beber</button>
+                            </div>
+                        </form>
+                        <form method="post" action="{{route('pessoa.recomendar')}}">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-warning">Recomendação</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,11 +121,12 @@
 
                                 console.log(place);
                                 $('#id_nome_local').html(place.name);
+                                $('#id_estabelecimento').val(place.place_id);
                                 $('#id_numero').html(place.formatted_phone_number);
                                 $('#id_nota').html('Nota: ' + place.rating);
                                 $('#id_comentarios tbody').html('');
-                                for(var i = 0; i < place.reviews.length; i++){
-                                    if(place.reviews[i].text != "") {
+                                for (var i = 0; i < place.reviews.length; i++) {
+                                    if (place.reviews[i].text != "") {
                                         var comentario = '<tr>';
 
                                         comentario += '<td class="text-center">' + place.reviews[i].rating + '</td>';

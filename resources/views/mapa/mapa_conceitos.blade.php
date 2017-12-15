@@ -48,8 +48,8 @@
                 <tbody>
                 @foreach($mapa_conceitos as $key => $conceito)
                     <tr>
-                        <td>{{$conceito['origem_nome']}}</td>
-                        <td>{{$conceito['destino_nome']}}</td>
+                        <td>{{$conceito['origem']}}</td>
+                        <td>{{$conceito['destino']}}</td>
                         <td>
                             <!--<button class="btn btn-primary">Editar</button>-->
                         </td>

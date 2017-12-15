@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\CervejaService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $cerveja_service;
+    public function __construct(CervejaService $cerveja_service)
     {
         $this->middleware('auth');
+        $this->cerveja_service = $cerveja_service;
     }
 
     /**
@@ -23,6 +21,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $cervejas = $this->cerveja_service->getAll();
+        return view('home', ['cervejas' => $cervejas]);
     }
 }

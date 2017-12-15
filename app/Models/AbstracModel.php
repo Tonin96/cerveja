@@ -23,6 +23,8 @@ class AbstracModel extends Model {
     const CONCEITO_PESSOA = 'pessoas';
     const CONCEITO_ESTABELECIMENTO = 'estabelecimentos';
     const CONCEITO_MAPAS = 'mapas';
+    const CONCEITO_BEBEU = 'bebeu';
+    const CARACTERISTICAS_PESSOA = 'caracteristicas_pessoa';
 
     public function getConceitos($tipo_conceito): Collection {
 
@@ -34,8 +36,10 @@ class AbstracModel extends Model {
         return collect();
     }
 
-    public function addConceito(Model $conceito) {
-        $tipo_conceito = $conceito->tipo_conceito;
+    public function addConceito(Model $conceito, $tipo_conceito = null) {
+        if(empty($tipo_conceito)){
+            $tipo_conceito = $conceito->tipo_conceito;
+        }
         if ($this->validaConceitos($tipo_conceito)) {
             $conceitos = collect(json_decode($this->conceitos)->$tipo_conceito);
         } else {

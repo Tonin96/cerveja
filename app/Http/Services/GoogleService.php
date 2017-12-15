@@ -9,20 +9,21 @@ use Illuminate\Http\Request;
 class GoogleService {
 
     private $types = array('bar', 'cafe', 'night_club', 'casino', 'restaurant');
+    private $google_maps_service;
 
-    public function __construct() {
-
+    public function __construct(GoogleMaps $google_maps_service) {
+        $this->google_maps_service = $google_maps_service;
     }
 
     public function getEstalecimentosByPosition(String $latitude, String $longitude, String $radius) {
-        $google = new GoogleMaps();
+
         $location = array($latitude, $longitude);
 
         $location = implode(",", $location);
         $estabelecimentos = array();
 
         foreach ($this->types as $type) {
-            $response = $google->load('nearbysearch')
+            $response = $this->google_maps_service->load('nearbysearch')
                 ->setParam(['location' => $location])
                 ->setParam(['radius' => $radius])
                 ->setParam(['type' => $type])
@@ -32,5 +33,14 @@ class GoogleService {
         }
 
         return response()->json(($estabelecimentos));
+    }
+
+    public function getEstabelecimentoById(String $place_id) {
+        $response = $this->google_maps_service->load('placedetails')
+            ->setParam(['placeid' => $place_id])
+            ->get(true);
+
+
+        return $response['result'];
     }
 }

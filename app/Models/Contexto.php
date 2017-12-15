@@ -4,13 +4,11 @@ namespace App\Models;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use PHPUnit\Exception;
 
-class Mapa extends Model {
-    protected $table = 'mapas';
+class Contexto extends Model {
+    protected $table = 'contexto';
 
-    protected $fillable = ['id', 'nome', 'conceitos'];
+    protected $fillable = ['id', 'descricao', 'conceitos'];
 
     protected $tipo_conceito = AbstracModel::CONCEITO_MAPAS;
     private $arvore;

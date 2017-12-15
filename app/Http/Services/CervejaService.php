@@ -4,9 +4,6 @@ namespace App\Http\Services;
 
 use App\Models\Cerveja;
 use App\Models\Conceito;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class CervejaService {
     private $model_cerveja;
@@ -18,7 +15,10 @@ class CervejaService {
     }
 
     public function get($id): Cerveja {
-        return $this->model_cerveja->find($id)->first();
+        if(is_array($id)){
+            $id = $id['cerveja_id'];
+        }
+        return $this->model_cerveja->find($id);
     }
 
     public function getAll() {
